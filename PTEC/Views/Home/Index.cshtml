@@ -1,0 +1,114 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="allDiv" id="FirstDiv">
+    <div class="row" id="divForm">
+        <div id="textMain" class="col-md-6">
+            <h1>Participar</h1>
+            <p>
+                Seleccione el numero de participaciones
+                <br />
+                Asegure que los datos de rotulacion coinciden con los datos de identificacion oficial
+            </p>
+        </div>
+        <div class="col-md-6" id="mainForm">
+            <div class="row">
+                <div class="col-md-6">
+                    <input type="text" id="nombre" name="nombre" placeholder="Nombre" required>
+                </div>
+                <div class="col-md-6">
+                    <input type="email" id="email" name="email" placeholder="Correo electronico" required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <input type="tel" id="telefono" name="telefono" placeholder="Telefono" required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <input type="number" id="cantidad-boletos" name="cantidad-boletos" required>
+
+                </div>
+            </div>
+            <div class="row">
+
+                <button onclick="saveForm()">Pagar</button>
+            </div>
+
+        </div>
+    </div>
+    <div class="row" id="divData" style="color: black; margin-left: 20px">
+        
+    </div>
+</div>
+
+<script>
+    function saveForm() {
+        debugger;
+        var nombre = $("#nombre").val();
+        var email = $("#email").val();
+        var telefono = $("#telefono").val();
+        var errores = "";
+        let nombreRegex = /^[A-Za-záéíóúñÑ ]+$/;
+        if (!nombreRegex.test(nombre)) {
+            errores += "El nombre contiene números.";
+        }
+
+        let emailRegex = /^[^\s@@]+@@[^\s@@]+\.[^\s@@]+$/;
+        if (!emailRegex.test(email)) {
+            errores += "\n El correo electrónico no es válido.";
+        }
+
+        let telefonoRegex = /^\d{10}$/;
+        if (!telefonoRegex.test(telefono)) {
+            errores += " \n El número de teléfono no es válido.";
+        }
+
+        if (errores == "") {
+            var user = new Object();
+            user.Nombre = nombre;
+            user.CorreoElectronico = email;
+            user.Telefono = telefono;
+            $.ajax({
+                url: '@Url.Action("SaveForm","Home")',
+                data: JSON.stringify(user),
+                type: 'POST',
+                contentType: "application/json",
+                traditional: true,
+                processData: false,
+                cache: false,
+                async: true,
+                success: function (response) {
+                    $("#divForm").hide();
+                    $("#FirstDiv").removeClass("allDiv").addClass("allDivJson");
+                    var obj = JSON.parse(response);
+                    var html = `<table>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Username</th>
+                                        <th>email</th>
+                                    </tr>`;
+                    obj.forEach(function (arrayItem) {
+                        html += `<tr> 
+                                    <th> ${arrayItem.name} </th>
+                                    <th> ${arrayItem.username} </th>
+                                    <th> ${arrayItem.email} </th>
+                                    </tr>`;
+                    });
+                    html += '</table>';
+                    $("#divData").html(html);
+                    $("#divData").show();
+
+                },
+                error: function (er) {
+                    console.log(er);
+                }
+
+            });
+        } else {
+            alert(errores);
+        }
+    }
+</script>

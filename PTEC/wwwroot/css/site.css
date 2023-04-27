@@ -1,0 +1,80 @@
+html {
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin-bottom: 60px;
+}
+
+#textMain {
+    color: white;
+}
+.allDiv {
+    background-image: url('../images/sorteo.jpg');
+    background-size: cover;
+    height: 78vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.allDivJson {
+    background-size: cover;
+    height: 78vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#mainForm {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+    #mainForm input {
+        margin-bottom: 10px;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    }
+
+    #mainForm button {
+        background-color: #333;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+        #mainForm button:hover {
+            background-color: #444;
+        }
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
